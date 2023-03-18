@@ -35,12 +35,14 @@ const resolvers = {
         const { _id, Country, Year, Area, TotalPopulation } = args;
         const exists = await PopulationData.findById(_id);
         if (!exists) return { message: `No document with _id '${_id}'.` };
-        const updatedPopulationData = await PopulationData.findOneAndUpdate(
+        await PopulationData.findOneAndUpdate(
           { _id },
           { $set: { Country, Year, Area, TotalPopulation } },
           { new: true }
         );
-        return updatedPopulationData;
+        return {
+          message: `Successfully update the data for document with _id '${_id}'`,
+        };
       } catch (e) {
         return { message: e?.message };
       }

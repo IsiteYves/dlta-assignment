@@ -33,7 +33,7 @@ const typeDefs = gql`
       Year: String!
       Area: Float!
       TotalPopulation: Int!
-    ): PopulationData
+    ): Message
     deletePopulationData(_id: String!): Message
   }
 `;
