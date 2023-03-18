@@ -4,13 +4,13 @@ const PopulationData = require("../models/PopulationData");
 const resolvers = {
   Query: {
     // Define a resolver for the 'populationData' query, which returns all population data
-    getCountryData: async () => {
+    getPopulationData: async () => {
       const data = await PopulationData.find();
       return data;
     },
   },
   Mutation: {
-    addData: async (_, args) => {
+    addPopulationData: async (_, args) => {
       const { Country, Year, Area, TotalPopulation } = args;
       // Create a new population data object using the model and provided arguments
       const populationData = new PopulationData({
@@ -22,7 +22,7 @@ const resolvers = {
       await populationData.save();
       return populationData;
     },
-    updateData: async (_, args) => {
+    updatePopulationData: async (_, args) => {
       const { Country, Year, Area, TotalPopulation } = args;
       const updatedPopulationData = await PopulationData.findOneAndUpdate(
         { Country, Year },
@@ -31,13 +31,15 @@ const resolvers = {
       );
       return updatedPopulationData;
     },
-    deleteData: async (_, args) => {
+    deletePopulationData: async (_, args) => {
       const { _id } = args;
       const result = await PopulationData.findByIdAndDelete(_id);
-      if (result.deletedCount === 1) {
-        return `Successfully deleted ${Country} ${Year} data`;
+      if (result?.deletedCount === 1) {
+        return {
+          message: `Successfully deleted the data for document with _id '${_id}'`,
+        };
       } else {
-        throw new Error(`Could not delete ${Country} ${Year} data`);
+        return { message: `No document with _id '${_id}'.` };
       }
     },
   },

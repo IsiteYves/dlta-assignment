@@ -12,24 +12,28 @@ const typeDefs = gql`
     TotalPopulation: Int
   }
 
+  type Message {
+    message: String
+  }
+
   type Query {
-    getCountryData: [PopulationData]
+    getPopulationData: [PopulationData]
   }
 
   type Mutation {
-    addData(
+    addPopulationData(
       Country: String!
       Year: String!
       Area: Float!
       TotalPopulation: Int!
     ): PopulationData
-    updateData(
+    updatePopulationData(
       Country: String!
       Year: String!
       Area: Float!
       TotalPopulation: Int!
     ): PopulationData
-    deleteData(_id: String!): PopulationData
+    deletePopulationData(_id: String!): Message
   }
 `;
 
