@@ -23,10 +23,10 @@ const resolvers = {
       return populationData;
     },
     updatePopulationData: async (_, args) => {
-      const { Country, Year, Area, TotalPopulation } = args;
+      const { _id, Country, Year, Area, TotalPopulation } = args;
       const updatedPopulationData = await PopulationData.findOneAndUpdate(
-        { Country, Year },
-        { $set: { Area, TotalPopulation } },
+        { _id },
+        { $set: { Country, Year, Area, TotalPopulation } },
         { new: true }
       );
       return updatedPopulationData;

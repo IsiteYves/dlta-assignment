@@ -28,6 +28,7 @@ const typeDefs = gql`
       TotalPopulation: Int!
     ): PopulationData
     updatePopulationData(
+      _id: String!
       Country: String!
       Year: String!
       Area: Float!
