@@ -32,14 +32,19 @@ const resolvers = {
       return updatedPopulationData;
     },
     deletePopulationData: async (_, args) => {
-      const { _id } = args;
-      const result = await PopulationData.findByIdAndDelete(_id);
-      if (result?.deletedCount === 1) {
-        return {
-          message: `Successfully deleted the data for document with _id '${_id}'`,
-        };
-      } else {
-        return { message: `No document with _id '${_id}'.` };
+      try {
+        const { _id } = args;
+        const exists = await PopulationData.findById(_id);
+        if (exists) {
+          await PopulationData.findByIdAndDelete(_id);
+          return {
+            message: `Successfully deleted the data for document with _id '${_id}'`,
+          };
+        } else {
+          return { message: `No document with _id '${_id}'.` };
+        }
+      } catch (e) {
+        return { message: e?.message };
       }
     },
   },
